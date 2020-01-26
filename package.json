@@ -1,0 +1,24 @@
+{
+  "name": "winston",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "test": "eslint .",
+    "migrate": "knex migrate:latest --knexfile ./knexfile.js",
+    "rollback": "knex migrate:rollback --knexfile ./knexfile.js "
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "5.16.0"
+  },
+  "dependencies": {
+    "apollo-server": "2.5.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "graphql": "14.3.0",
+    "knex": "^0.20.8",
+    "pg": "^7.17.1",
+    "uuid": "3.3.2"
+  }
+}
