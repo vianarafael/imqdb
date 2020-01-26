@@ -4,9 +4,31 @@ html {
   font-family: 'helvetica neue';
   font-size: 20px;
   font-weight: 200;
+  color: rgb(29, 29, 29);
+}
+
+button {
+  padding: 4px;
+  margin: 8px;
+}
+
+input {
+  margin: 4px;
 }
 
 .invisible {
   display: none;
+}
+
+.title {
+  text-align: center;
+}
+
+.top {
+  text-align: center;
+}
+
+.container {
+  text-align: center;
 }
 

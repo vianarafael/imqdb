@@ -10,7 +10,7 @@ const typeDefs = gql`
     id: ID
     quote: String
     movie: String
-    year: Int
+    year: String
   }
 
   type Query {

@@ -20,6 +20,21 @@ function updateUI() {
 
 }
 
+function makeVisible(node) {
+  while ( node ) {
+    console.log(node)
+    if (node.nodeType === Node.ELEMENT_NODE ) {
+      if (node.classList.contains("invisible")) {
+           node.classList.remove("invisible")
+           node.classList.add("visible")
+        }
+    }
+
+
+    node = node.nextElementSibling || node.nextSibling;
+  }
+}
+
 function deleteOrEdit(event) {
   //delete
   const element = event.target;
@@ -46,17 +61,7 @@ function deleteOrEdit(event) {
   if (element.classList.contains("btn-edit")) {
     let node = element.parentNode.parentNode.firstChild;
 
-    while ( node ) {
-        if ( node !== this && node.nodeType === Node.ELEMENT_NODE ) {
-          if (node.classList.contains("invisible")) {
-               node.classList.remove("invisible")
-               node.classList.add("visible")
-            }
-        }
-
-
-        node = node.nextElementSibling || node.nextSibling;
-    }
+    makeVisible(node)
     const id = element.parentElement.id
   }
 
@@ -134,8 +139,15 @@ document.querySelector('.add-form__btn').addEventListener('click', (e) => {
     body: JSON.stringify({ query: mutation }),
   })
   .then(res => res.json())
-  .then(() => updateUI())
+  .then(() => {
+    updateUI()
+    document.querySelector(".add-form").classList.add('invisible')})
 })
 
 
 document.addEventListener("click", deleteOrEdit)
+
+document.querySelector('.btn-add').addEventListener('click', (e) => {
+  const node = e.target.parentNode.firstChild
+  makeVisible(node)
+})
