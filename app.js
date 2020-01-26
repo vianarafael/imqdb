@@ -13,11 +13,36 @@ function updateUI() {
   .then(movies => {
       let html = ''
       movies.forEach(movie => {
-          html += `<p id="${movie.id}">${movie.quote} ${movie.movie}, ${movie.year} <button class="btn-delete">Delete</button><button class="btn-edit">Edit</button></p>`
+          html += `<p id="${movie.id}">${movie.quote} ${movie.movie}, ${movie.year} <button class="btn-delete">Delete</button><button class="btn-edit">Edit</button></p><input type="text" class="add-form__input-quote invisible" placeholder="Quote"><input type="text" class="add-form__input-movie invisible" placeholder="Movie"><input type="text" class="add-form__input-year invisible" placeholder="Year">`
       })
       document.querySelector('.container').innerHTML = html
   });
 
+}
+
+function deleteOrEdit(event) {
+  const element = event.target;
+  if (element.classList.contains("btn-delete")){
+      const id = element.parentElement.id
+      const mutation =  `
+      mutation {
+        deleteQuote(id: "${id}") {
+          ok
+        }
+      }
+    `;
+    
+      fetch('http://localhost:4000', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: mutation }),
+      })
+      .then(res => res.json())
+      .then(() => updateUI())
+  }
+  if (element.classList.contains("btn-edit")) {
+    console.log("editing")
+  }
 }
 
 
@@ -28,7 +53,6 @@ document.querySelector('.add-form__btn').addEventListener('click', (e) => {
   const quote = document.querySelector(".add-form__input-quote").value
   const movie = document.querySelector(".add-form__input-movie").value
   const year = document.querySelector(".add-form__input-year").value
-  console.log(quote, movie, year)
   const mutation =  `
   mutation {
     addQuote(quote: "${quote}", movie: "${movie}", year: "${year}") {
@@ -45,7 +69,8 @@ document.querySelector('.add-form__btn').addEventListener('click', (e) => {
     body: JSON.stringify({ query: mutation }),
   })
   .then(res => res.json())
-  .then(res => updateUI())
+  .then(() => updateUI())
 })
 
 
+document.addEventListener("click", deleteOrEdit)
