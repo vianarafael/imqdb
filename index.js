@@ -47,7 +47,6 @@ const resolvers = {
       return knex('quotes')
       .select()
       .then((quotes) =>{
-        console.log(quotes)
         return quotes
         }) 
 
@@ -61,7 +60,7 @@ const resolvers = {
           quote: quote.quote,
           movie: quote.movie,
           year: quote.year
-        })
+        }).then(quote => quote)
 
       },
       editQuote: async (parent, { id, ...quote }) => {
