@@ -28,21 +28,9 @@ const typeDefs = gql`
   }
 `;
 
-// const quotes = {};
-// const addQuote = quote => {
-//   const id = uuid();
-//   return quotes[id] = { ...quote, id };
-// };
-
-// Start with a few initial quotes
-// addQuote({ quote: "I'm a leaf on the wind. Watch how I soar.", quotee: "Wash", year: 1999 });
-// addQuote({ quote: "We're all stories in the end.", quotee: "The Doctor", year: 1234 });
-// addQuote({ quote: "Woah!", quotee: "Neo", year: 1999 });
-
-
 const resolvers = {
     Query: {
-        quotes: () => // Object.values(quotes),
+        quotes: () => 
     {
       return knex('quotes')
       .select()
@@ -54,7 +42,6 @@ const resolvers = {
       },
     Mutation: {
       addQuote: async (parent, quote) => {
-        //return addQuote(quote);
         return knex('quotes')
         .insert({
           quote: quote.quote,
@@ -64,7 +51,6 @@ const resolvers = {
 
       },
       editQuote: async (parent, { id, ...quote }) => {
-        console.log(quote)
         return knex('quotes')
         .where('id', '=', id)
         .update({
@@ -74,7 +60,6 @@ const resolvers = {
         })
       },
       deleteQuote: async (parent, { id }) => {
-        console.log(id)
         return knex('quotes')
         .del()
         .where('id', '=', id)

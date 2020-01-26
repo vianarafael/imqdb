@@ -6,3 +6,7 @@ html {
   font-weight: 200;
 }
 
+.invisible {
+  display: none;
+}
+
